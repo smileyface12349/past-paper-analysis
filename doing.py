@@ -92,6 +92,7 @@ while True:
                 current_question.append(previous_question[i])
 
     if blank_counter >= 4: # empty row in spreadsheet
+        print('')
         print("END OF QUESTIONS")
         break
 
@@ -130,11 +131,12 @@ while True:
 
 
 # TODO: Checking answers
-print("You are now able to go back and check your answers")
+print('')
+print("You are welcome to go back and check your answers")
 print(f"You have {minutes-total_elapsed:.1f} minutes remaining")
 
 start = time.time()
-print("NOTE: You are not currently able to choose questions to check during this period")
+print("NOTE: Time spent on each individual question is not currently tracked during review.")
 input("Press ENTER once you are done checking")
 print(f"You spent {(time.time()-start)/60:.3f} minutes checking your answers")
 

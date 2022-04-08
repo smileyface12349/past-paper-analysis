@@ -50,14 +50,8 @@ HEADINGS = {
     'L': 'Correct Answer',
     'M': 'Time (minutes)',
     'N': 'Time / mark',
-    'O': 'Answer 1',
-    'P': 'Time 1',
-    'Q': 'Answer 2',
-    'R': 'Time 2',
-    'S': 'Answer 3',
-    'T': 'Time 3',
-    'U': 'Answer 4+',
-    'V': 'Time 4+'
+    'O': 'Time Reviewing',
+    'P': 'Marks Before Reviewing'
 }
 
 # TODO: Set width of columns
@@ -183,8 +177,10 @@ while True:
         sheet[COLUMNS['topic']+next_vacant_row] = topic.title()
         sheet[COLUMNS['type']+next_vacant_row] = question_type.title()
 
-        # add in formulas
+        # add in formulae
         sheet[COLUMNS['percent']+next_vacant_row] = f"={COLUMNS['mark attained']+next_vacant_row}/{COLUMNS['total marks']+next_vacant_row}"
+        sheet[COLUMNS['time minutes'] + next_vacant_row] = f"={COLUMNS['time'] + next_vacant_row}/60"
+        sheet[COLUMNS['time per mark'] + next_vacant_row] = f"={COLUMNS['time minutes'] + next_vacant_row}/{COLUMNS['total marks'] + next_vacant_row}"
 
         # save (in case the program stops working)
         ss.save(filename)

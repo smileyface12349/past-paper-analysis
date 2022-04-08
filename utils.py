@@ -26,5 +26,7 @@ COLUMNS = {
     'type': 'I',
     'percent': 'G',
     'time': 'H',
+    'time minutes': 'M',
+    'time per mark': 'N',
     'given answer': 'K'
 }
