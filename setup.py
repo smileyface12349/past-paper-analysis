@@ -43,24 +43,28 @@ HEADINGS = {
     'E': 'Marks Attained',
     'F': 'Marks Available',
     'G': 'Percentage',
-    'H': 'Total Time Taken',
+    'H': 'Time Taken (seconds)',
     'I': 'Type of Question',
     'J': 'Topic',
     'K': 'Final Given Answer',
     'L': 'Correct Answer',
-    'M': 'Answer 1',
-    'N': 'Time 1',
-    'O': 'Answer 2',
-    'P': 'Time 2',
-    'Q': 'Answer 3',
-    'R': 'Time 3',
-    'S': 'Answer 4+',
-    'T': 'Time 4+'
+    'M': 'Time (minutes)',
+    'N': 'Time / mark',
+    'O': 'Answer 1',
+    'P': 'Time 1',
+    'Q': 'Answer 2',
+    'R': 'Time 2',
+    'S': 'Answer 3',
+    'T': 'Time 3',
+    'U': 'Answer 4+',
+    'V': 'Time 4+'
 }
 
 # TODO: Set width of columns
 # TODO: Display percent as percent
 # TODO: Colour scales on relevant columns
+# TODO: Formulas for time in minutes and time per mark
+# TODO: Formulas (in analysis) for total mark, percent, total time
 
 for column in HEADINGS:
     sheet[column+'1'] = HEADINGS[column]
@@ -77,7 +81,7 @@ def print_help():
     print("If you make a mistake, you can type 'back' or edit it manually in the spreadsheet AFTER the program completes")
     print('')
     print('QUESTION INPUT FORMAT')
-    print(f"<available marks> <question type> [topic]")
+    print(f"<available marks> [question type] [topic]")
     print(f"Question type should be one of: multiple-choice (0), calculation (1), written (2), other (3)")
     print(f" - Custom question types are allowed as long as they do not include any spaces")
     print(f"If [topic] is not specified, the topic entered most recently will be used")
@@ -85,6 +89,7 @@ def print_help():
     print(" e.g. 6 2              (6 mark written question on previous topic")
     print(" e.g. 3 c moments      (you can use the first letter to specify question type)")
     print(" e.g. 1 o graphs       (e.g. drawing best fit line)")
+    print(" e.g. 4                (you can set the type & topic later if you wish)")
     print('')
     print("Type 'stop' once the end of the paper has been reached")
     print("Type 'help' to get this information again")
@@ -150,8 +155,13 @@ while True:
                 marks, question_type = details.split(' ', 2)
                 topic = previous_topic
             except:
-                print("Invalid input. Type 'help' for help")
-                continue
+                try:
+                    marks = details
+                    question_type = 'none provided'
+                    topic = previous_topic
+                except:
+                    print("Invalid input. Type 'help' for help")
+                    continue
         try:
             marks = int(marks)
         except:

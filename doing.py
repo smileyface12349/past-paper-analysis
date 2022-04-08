@@ -23,8 +23,8 @@ while True:
             if len(possibilities) >= 9:
                 break
     filename = input("File Name: ")
-    if '.' not in filename:
-        filename += '.xlsx'
+    if filename == '':
+        filename = '0'
     if filename.isdigit() and len(filename) == 1:
         i = int(filename)
         try:
@@ -32,6 +32,8 @@ while True:
         except:
             print(f"There is no file {i} in the list of options")
             continue
+    if '.' not in filename:
+        filename += '.xlsx'
     try:
         ss = openpyxl.load_workbook(filename)
         break
@@ -78,7 +80,7 @@ while True:
     blank_counter = 0
     for i in range(4):
         cell = Q_COLUMNS[i]+str(current_row)
-        value = sheet[cell]
+        value = sheet[cell].value
         if value:
             current_question.append(value)
             higher_level_changed = True
@@ -93,14 +95,14 @@ while True:
         print("END OF QUESTIONS")
         break
 
-    question_number = ''.join(['('+q+')' for q in current_question if q])
+    question_number = ''.join(['('+str(q)+')' for q in current_question if q])
+    marks = sheet[COLUMNS['total marks'] + str(current_row)].value
 
     start = time.time()
     elapsed = 0
     while True:
         print('')
-        print(f"You have used {math.floor(total_elapsed/60)}/{minutes} ({math.floor(total_elapsed/60/minutes*100)}%)")
-        print(f"Question {question_number}")
+        print(f"{question_number} [{marks} marks]")
         answer = input("Answer: ")
         if answer.lower() == 'pause':
             elapsed += time.time() - start
@@ -114,14 +116,15 @@ while True:
             start = time.time()
         else:
             elapsed += time.time() - start
+            total_elapsed += elapsed
             sheet[COLUMNS['time'] + str(current_row)] = elapsed
             if answer:
                 sheet[COLUMNS['given answer']+str(current_row)] = answer
             ss.save(filename)
             break
 
-    marks = sheet[COLUMNS['total marks']+str(current_row)]
     print(f"That question took you {elapsed/60:.1f} minutes for {marks} marks.")
+    print(f"You have used {math.floor(total_elapsed / 60)}/{minutes} minutes ({math.floor(total_elapsed / 60 / minutes * 100)}%)")
 
     current_row += 1
 
@@ -129,3 +132,11 @@ while True:
 # TODO: Checking answers
 print("You are now able to go back and check your answers")
 print(f"You have {minutes-total_elapsed:.1f} minutes remaining")
+
+start = time.time()
+print("NOTE: You are not currently able to choose questions to check during this period")
+input("Press ENTER once you are done checking")
+print(f"You spent {(time.time()-start)/60:.3f} minutes checking your answers")
+
+print('')
+input("Press ENTER to close the program")
