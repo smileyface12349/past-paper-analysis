@@ -133,7 +133,7 @@ while True:
 # TODO: Checking answers
 print('')
 print("You are welcome to go back and check your answers")
-print(f"You have {minutes-total_elapsed:.1f} minutes remaining")
+print(f"You have {minutes-total_elapsed/60:.1f} minutes remaining")
 
 start = time.time()
 print("NOTE: Time spent on each individual question is not currently tracked during review.")
