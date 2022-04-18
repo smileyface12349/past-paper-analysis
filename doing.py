@@ -139,6 +139,7 @@ start = time.time()
 print("NOTE: Time spent on each individual question is not currently tracked during review.")
 input("Press ENTER once you are done checking")
 print(f"You spent {(time.time()-start)/60:.3f} minutes checking your answers")
+print(f"You still have {minutes-total_elapsed/60-(time.time()-start)/60:.2f} minutes of unused time")
 
 print('')
 input("Press ENTER to close the program")

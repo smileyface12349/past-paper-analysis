@@ -133,7 +133,7 @@ while True:
             depth += 1
     elif details in ['-', '[', '<', 'out', 'up', 'next', 'n', '']:
         if depth <= 0:
-            print("Minimum depth reached")
+            print("Minimum depth reached. Type 'stop' to stop")
         else:
             depth -= 1
             if current_question[depth+1] != 0:  # don't move onto next part if this part is empty (e.g. 2bi -> 2b, 2bii -> 2c)
