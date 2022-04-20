@@ -102,6 +102,8 @@ PREDEFINED_QUESTION_TYPES = {
     'o': 'other'
 }
 
+# TODO: Make question type optional
+
 depth = 0
 previous_topic = 'no topic provided'
 current_question = [0, 0, 0, 0]
@@ -132,6 +134,7 @@ while True:
         else:
             depth += 1
     elif details in ['-', '[', '<', 'out', 'up', 'next', 'n', '']:
+        # TODO: -- to go up 2 levels etc.
         if depth <= 0:
             print("Minimum depth reached. Type 'stop' to stop")
         else:
